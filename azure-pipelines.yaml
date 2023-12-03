@@ -41,8 +41,8 @@ stages:
         provider: 'azurerm'
         command: 'init'
         commandOptions: '-backend-config=$(azurecredentials.secureFilePath)'
-        backendServiceArm: 'phongmx-sub'
-        backendAzureRmResourceGroupName: 'tstate'
+        backendServiceArm: 'phong-sub'
+        backendAzureRmResourceGroupName: 'Project3'
         backendAzureRmStorageAccountName: 'tstatephongmx'
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'test.terraform.tfstate'
@@ -52,7 +52,7 @@ stages:
     - task: AzureCLI@1
       displayName: Set Environment Variables for Terraform
       inputs:
-        azureSubscription: phongmx-sub
+        azureSubscription: phong-sub
         scriptLocation: inlineScript
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         addSpnToEnvironment: true
@@ -70,7 +70,7 @@ stages:
         command: 'apply'
         commandOptions: '-auto-approve'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-        environmentServiceNameAzureRM: 'phongmx-sub'
+        environmentServiceNameAzureRM: 'phong-sub'
 
 - stage: Build
   jobs:
@@ -121,7 +121,7 @@ stages:
           - task: AzureRmWebAppDeployment@4
             inputs:
               ConnectionType: 'AzureRM'
-              azureSubscription: 'phongmx-sub'
+              azureSubscription: 'phong-sub'
               appType: 'webApp'
               WebAppName: 'udacitytest-AppService'
               packageForLinux: '$(Pipeline.Workspace)/drop-fakerestapi/fakerestapi-$(Build.BuildId).zip'
@@ -304,7 +304,7 @@ stages:
 #        provider: 'azurerm'
 #        command: 'init'
 #        commandOptions: '-backend-config=$(azurecredentials.secureFilePath)'
-#        backendServiceArm: 'phongmx-sub'
+#        backendServiceArm: 'phong-sub'
 #        backendAzureRmResourceGroupName: 'tstate'
 #        backendAzureRmStorageAccountName: 'tstate19206'
 #        backendAzureRmContainerName: 'tstate'
@@ -319,4 +319,4 @@ stages:
 #        commandOptions: |
 #          -auto-approve 
 #        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
-#        environmentServiceNameAzureRM: 'phongmx-sub'
+#        environmentServiceNameAzureRM: 'phong-sub'
