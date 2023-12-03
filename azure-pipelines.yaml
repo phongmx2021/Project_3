@@ -7,7 +7,7 @@ stages:
   - job: TerraformTasks
     displayName: Terraform Tasks
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
 
     steps:
     #Download azurecredentials.conf File
@@ -74,7 +74,7 @@ stages:
   - job: build_artifacts
     displayName: Build Artifacts
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: ArchiveFiles@2
       displayName: Archive FakeRestAPI
@@ -109,7 +109,7 @@ stages:
   - deployment: deploy_fakerestapi
     displayName: Deploy FakeRestAPI
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
     environment: 'TEST'
     strategy:
       runOnce:
@@ -181,7 +181,7 @@ stages:
   - job: test_jmeter
     displayName: Test JMeter
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
     steps:
     - bash: |
         sudo apt-get install openjdk-11-jre-headless -y
@@ -227,7 +227,7 @@ stages:
   - job: TestNewman
     displayName: Test Postman with Newman CLI
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
     steps: 
     - task: NodeTool@0
       displayName: Install Node v12.X
@@ -270,7 +270,7 @@ stages:
 #  - job: destroy_azure_infrastructure
 #    displayName: Destroy Azure Infrastructure
 #   pool:
-#    vmImage: 'ubuntu-18.04'
+#    vmImage: 'ubuntu-latest'
 #    steps:
 #    
 #    #Download azurecredentials.conf File
