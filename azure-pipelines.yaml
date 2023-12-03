@@ -2,7 +2,7 @@ variables:
  - group: Project3
 
 trigger:
-- master
+- main
 
 stages:
 - stage: Provision
