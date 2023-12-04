@@ -27,7 +27,7 @@ stages:
               backendServiceArm: '$(azureServiceConnectionId)'
               backendAzureRmResourceGroupName: 'Project3'
               backendAzureRmStorageAccountName: 'tfstatephongmx'
-              backendAzureRmContainerName: 'tstate'
+              backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'test.terraform.tfstate'
 
           - task: TerraformTaskV3@3
