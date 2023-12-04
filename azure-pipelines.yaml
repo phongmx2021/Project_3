@@ -3,7 +3,7 @@ name: $(Date:yyyyMMdd)$(Rev:.r)
 trigger:
   - main
 
-pool: Default
+pool: Azure Pipelines
 
 variables:
   python.version: '3.7.6'
