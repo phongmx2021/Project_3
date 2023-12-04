@@ -77,7 +77,7 @@ stages:
       - deployment: DeployFakeRestAPI
         pool:
           name: Default
-        environment: 'AzureDevOps'
+        environment: 'TEST'
         strategy:
           runOnce:
             deploy:
@@ -92,7 +92,7 @@ stages:
                     deploymentMethod: 'auto'
       - deployment: DeployVirtualMachine
         environment:
-          name:  'AzureDevOps'
+          name:  'TEST'
           resourceType: VirtualMachine
         strategy:
           runOnce:
@@ -133,7 +133,7 @@ stages:
     jobs:
       - deployment: SeleniumTests
         environment:
-          name:  'AzureDevOps'
+          name:  'TEST'
           resourceType: VirtualMachine
         strategy:
           runOnce:
