@@ -7,9 +7,10 @@ tenant_id = "b8085039-5d37-4879-acc7-e718aa51a8f0"
 # Resource Group/Location
 location = "eastus"
 resource_group_name = "Project3"
+resource_group = "Project3"
 application_type = "phongmx-webapp"
 
 # Network
-virtual_network_name = ""
+virtual_network_name = "VNET"
 address_space = ["10.5.0.0/16"]
 address_prefix_test = "10.5.1.0/24"
