@@ -159,7 +159,7 @@ stages:
           - task: NodeTool@0
             displayName: Install Node v12.X
             inputs:
-              versionSpec: "12.x"
+              versionSpec: "16.x"
           - bash: |
               npm install -g newman
               newman --version
