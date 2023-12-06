@@ -52,7 +52,7 @@ stages:
               rootFolderOrFile: "automatedtesting/jmeter/fakerestapi"
               includeRootFolder: false
               archiveType: "zip"
-              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip"
+              archiveFile: "$(Build.DefaultWorkingDirectory)/$(Build.BuildId)-fakerestapi.zip"
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
             displayName: "Upload Package"
             artifact: drop-fakerestapi
@@ -62,9 +62,9 @@ stages:
               rootFolderOrFile: "automatedtesting/selenium"
               includeRootFolder: false
               archiveType: "zip"
-              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
+              archiveFile: "$(Build.DefaultWorkingDirectory)/$(Build.BuildId)-Selenium.zip"
               replaceExistingArchive: true
-          - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
+          - publish: "$(Build.DefaultWorkingDirectory)/$(Build.BuildId)-Selenium.zip"
             artifact: drop-Selenium
 
   - stage: Deploy
