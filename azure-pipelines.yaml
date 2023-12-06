@@ -53,7 +53,7 @@ stages:
               includeRootFolder: false
               archiveType: "zip"
               archiveFile: "$(Build.DefaultWorkingDirectory)/$(Build.BuildId)-fakerestapi.zip"
-          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+          - publish: $(Build.DefaultWorkingDirectory)/$(Build.BuildId)-fakerestapi.zip
             displayName: "Upload Package"
             artifact: drop-fakerestapi
           - task: ArchiveFiles@2
