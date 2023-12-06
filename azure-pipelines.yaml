@@ -80,7 +80,7 @@ stages:
               inputs:
                 azureSubscription: '$(azureServiceConnectionId)'
                 appType: 'webApp'
-                appName: 'automate-app-test-azure-project-AppService'
+                appName: 'phongmx-webapp-AppService'
                 package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
                 deploymentMethod: 'auto' 
 
