@@ -130,7 +130,6 @@ stages:
                   ls
                   cd drop-selenium
                   ls
-                  find . -type f ! -name '$(Build.BuildId)-selenium.zip' -delete  # delete everything except '$(Build.BuildId)-selenium.zip'
                   unzip -o $(Build.BuildId)-selenium.zip
                   pwd
                   ls -la
