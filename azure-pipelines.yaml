@@ -137,6 +137,7 @@ stages:
                   ls
                   cd drop-selenium
                   ls
+                  unzip -v
                   unzip -o 105-selenium.zip
                   unzip -o $(Build.BuildId)-selenium.zip
                   pwd
