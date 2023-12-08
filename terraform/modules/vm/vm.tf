@@ -22,7 +22,7 @@ resource "azurerm_linux_virtual_machine" "test" {
 
   admin_ssh_key {
     username   = var.admin_username
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDlLF8M7VHy5U6YVkNBq8Xypf0iNu2pi7B//soY7ZLJ1muqQOuG7Ds15UZK8e3YQnbQGq0Nkt3bPMjxzAfXLvD0xHp0e0xzrBLTrkvrS9mx9IO4jevr0OA1dNTlHAc9nX1a4S+jm7QtgZ3DlwoxdE0phKXSDtmLjIfFTvCNRmnQ3d8cVolUVgSyvTACaXI1r14dPvZeyPmUXV68hxOT4SPeQdWfjhvdtqVQ/hdLu2oyUUqDctruTkilCPdafT4nXCzNy66Nm8q4Dy4jbUf5b20q9N582NfpV1VQbWCz1R/7wPIfObC0l6gWdXccgt/wepOjH5V346lT87+GYBOkkqbLpFHwls0NsFdF6+SPfjCd1qkfClsKaXKwq0IIUGOwKRy2LRFXqNWxSNAD1EOzSLkNQoEa2HpkpEKzIGOV4E9HJJ/7xAJbJdrcNn9uEcobJ1qu7OZ8Uaq+IekpjzfuST8KAtg5qfaILEYOmm6GueLDbrr+8R74WXY5uHUXj+XJ1jc= phongmx\phongmx@PhongMX"
+    public_key = file("/home/vsts/work/_temp/id_rsa.pub")
   }
   os_disk {
     caching              = "ReadWrite"
