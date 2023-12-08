@@ -49,17 +49,17 @@ stages:
           - task: ArchiveFiles@2
             displayName: "Archive FakeRestAPI"
             inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)automatedtesting/jmeter/fakerestapi"
+              rootFolderOrFile: "automatedtesting/jmeter/fakerestapi"
               includeRootFolder: false
               archiveType: "zip"
-              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip"
+              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
             displayName: "Upload Package"
             artifact: drop-fakerestapi
           - task: ArchiveFiles@2
             displayName: "Selenium"
             inputs:
-              rootFolderOrFile: "$(System.DefaultWorkingDirectory)automatedtesting/selenium"
+              rootFolderOrFile: "automatedtesting/selenium"
               includeRootFolder: false
               archiveType: "zip"
               archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
@@ -81,7 +81,7 @@ stages:
                     azureSubscription: "$(azureServiceConnectionId)"
                     appType: "webApp"
                     appName: "phongmx-webapp-AppService"
-                    package: "$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip"
+                    package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
                     deploymentMethod: "zipDeploy"
 
       - deployment: VMDeploy
@@ -125,27 +125,27 @@ stages:
           runOnce:
             deploy:
               steps:
-                - bash: |
-                    cd $(Pipeline.Workspace)/drop-selenium
-                    find . -type f ! -name 'selenium-$(Build.BuildId).zip' -delete  # delete everything except 'selenium-$(Build.BuildId).zip'
-                    unzip -o selenium-$(Build.BuildId).zip
-                    pwd
-                    ls -la
-                    sudo mkdir -p /var/log/selenium
-                    sudo chmod 664 /var/log/selenium
-                    sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
-                    # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
-                    cd $(System.DefaultWorkingDirectory)
-                    mkdir -p log/selenium
-                    pwd
-                    sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
-                    ls -la
-                  displayName: Run selenium tests
-                - task: PublishPipelineArtifact@1
-                  displayName: Publish selenium logs
-                  inputs:
-                    targetPath: "$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log"
-                    artifactName: "drop-selenium-logs"
+              - bash: |
+                  cd $(Pipeline.Workspace)/drop-selenium
+                  find . -type f ! -name 'selenium-$(Build.BuildId).zip' -delete  # delete everything except 'selenium-$(Build.BuildId).zip'
+                  unzip -o selenium-$(Build.BuildId).zip
+                  pwd
+                  ls -la
+                  sudo mkdir -p /var/log/selenium
+                  sudo chmod 664 /var/log/selenium
+                  sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
+                  # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
+                  cd $(System.DefaultWorkingDirectory)
+                  mkdir -p log/selenium
+                  pwd
+                  sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
+                  ls -la
+                displayName: Run selenium tests
+              - task: PublishPipelineArtifact@1
+                displayName: Publish selenium logs
+                inputs:
+                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+                  artifactName: 'drop-selenium-logs'
 
   - stage: Integration_Tests
     jobs:
