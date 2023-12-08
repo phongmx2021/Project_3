@@ -65,7 +65,7 @@ stages:
               archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
               replaceExistingArchive: true
           - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
-            artifact: drop-Selenium
+            artifact: drop-selenium
 
   - stage: Deploy
     jobs:
