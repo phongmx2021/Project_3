@@ -81,7 +81,7 @@ stages:
                     azureSubscription: "$(azureServiceConnectionId)"
                     appType: "webApp"
                     appName: "phongmx-webapp-AppService"
-                    package: "$(Build.DefaultWorkingDirectory)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip"
+                    package: "$(Build.DefaultWorkingDirectory)/$(Build.BuildId)-fakerestapi.zip"
                     deploymentMethod: "auto"
 
       - deployment: VMDeploy
