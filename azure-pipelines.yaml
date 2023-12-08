@@ -126,7 +126,10 @@ stages:
             deploy:
               steps:
               - bash: |
-                  cd $(Pipeline.Workspace)/drop-selenium
+                  cd $(Pipeline.Workspace)
+                  ls
+                  cd drop-selenium
+                  ls
                   find . -type f ! -name 'selenium-$(Build.BuildId).zip' -delete  # delete everything except 'selenium-$(Build.BuildId).zip'
                   unzip -o selenium-$(Build.BuildId).zip
                   pwd
