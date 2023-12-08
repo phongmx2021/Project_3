@@ -106,6 +106,8 @@ stages:
                       sudo apt-get upgrade -y
                       sudo apt-get install python3-pip -y
                       sudo apt-get install unzip -y
+                      sudo apt-get install zip unzip
+                      sudo apt install unzip
                       sudo apt-get install -y chromium-browser
 
                       wget https://chromedriver.storage.googleapis.com/104.0.5112.29/chromedriver_linux64.zip
@@ -135,6 +137,7 @@ stages:
                   ls
                   cd drop-selenium
                   ls
+                  unzip -o 105-selenium.zip
                   unzip -o $(Build.BuildId)-selenium.zip
                   pwd
                   ls -la
