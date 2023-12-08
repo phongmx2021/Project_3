@@ -125,29 +125,19 @@ stages:
           runOnce:
             deploy:
               steps:
-              - bash: |
-                  cd $(Pipeline.Workspace)
-                  ls
-                  cd drop-selenium
-                  ls
-                  unzip -o $(Build.BuildId)-selenium.zip
-                  pwd
-                  ls -la
-                  sudo mkdir -p /var/log/selenium
-                  sudo chmod 664 /var/log/selenium
-                  sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
-                  # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
-                  cd $(System.DefaultWorkingDirectory)
-                  mkdir -p log/selenium
-                  pwd
-                  sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
-                  ls -la
-                displayName: Run selenium tests
-              - task: PublishPipelineArtifact@1
-                displayName: Publish selenium logs
+              - download: current
+                displayName: 'Download Selenium'
+                artifact: selenium
+              - task: Bash@3
+                displayName: UI Tests
                 inputs:
-                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
-                  artifactName: 'drop-selenium-logs'
+                  targetType: 'inline'
+                  script: |
+                    unzip -o $(Pipeline.Workspace)/drop-selenium/$(Build.BuildId)-selenium.zip -d .
+                    sudo mkdir /var/logs
+                    python3 uitests.py > ui-logs.log
+                    cat ui-logs.log
+                    sudo mv ui-logs.log /var/logs
 
   - stage: Integration_Tests
     jobs:
