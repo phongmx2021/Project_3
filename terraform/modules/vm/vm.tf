@@ -18,6 +18,7 @@ resource "azurerm_linux_virtual_machine" "test" {
   size                  = "Standard_B1s"
   admin_username        = var.admin_username
   disable_password_authentication = false
+  admin_password        = "Abcde12345-="
   network_interface_ids = [azurerm_network_interface.test.id]
 
   admin_ssh_key {
