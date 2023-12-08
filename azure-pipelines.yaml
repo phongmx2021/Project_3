@@ -97,29 +97,30 @@ stages:
           runOnce:
             deploy:
               steps:
-              - bash: |
-                  pwd
-                  hostname
-                  uname -a
-                  cat /etc/*-release
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
-                  sudo apt-get update -y
+              - script: |
+                  #! /bin/bash
+                  sudo apt-get upgrade -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
                   sudo apt-get install -y chromium-browser
-                  sudo apt-get install -y chromium-chromedriver
-                  python3 -m pip install --upgrade pip
                   pip3 install selenium
-                  python3 -V
-                  pip3 -V
-                  /usr/bin/chromium-browser --version
-                  /usr/bin/chromedriver --version
-                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  
+                  # download chrome driver
+                  FILE=chromedriver_linux64.zip
+                  if [ -f "$FILE" ]; then
+                    echo "$FILE exists."
+                  else
+                    wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+                  fi
+                  # install chrome driver
+                  unzip chromedriver_linux64.zip
+                  sudo mv chromedriver /usr/bin/chromedriver
+                  sudo chown root:root /usr/bin/chromedriver
+                  sudo chmod +x /usr/bin/chromedriver
+                  chromium-browser -version
+                  chromedriver --version
                   # Install Log Analytics agent on Linux computers (only need to run once)
-                  # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
-                  # sh onboard_agent.sh -w 12080dda-b2a5-4be3-9816-491480e0e9ff -s 0EZuVkYZp0hTm3tXTsQzOEX0r9PuyABj7/Jf6H0UMiLXAT8GUIzS7X0Xfxejl91bf1X1l3baxg3V+EBQ/N2U9g==
-                  # sudo /opt/microsoft/omsagent/bin/service_control restart 12080dda-b2a5-4be3-9816-491480e0e9ff
+                  wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w 12080dda-b2a5-4be3-9816-491480e0e9ff -s 0EZuVkYZp0hTm3tXTsQzOEX0r9PuyABj7/Jf6H0UMiLXAT8GUIzS7X0Xfxejl91bf1X1l3baxg3V+EBQ/N2U9g== && sudo /opt/microsoft/omsagent/bin/service_control restart 12080dda-b2a5-4be3-9816-491480e0e9ff
                 displayName: Configure selenium
 
   - stage: UI_Tests
