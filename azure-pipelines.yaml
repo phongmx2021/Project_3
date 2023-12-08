@@ -130,8 +130,8 @@ stages:
                   ls
                   cd drop-selenium
                   ls
-                  find . -type f ! -name 'selenium-$(Build.BuildId).zip' -delete  # delete everything except 'selenium-$(Build.BuildId).zip'
-                  unzip -o selenium-$(Build.BuildId).zip
+                  find . -type f ! -name '$(Build.BuildId)-selenium.zip' -delete  # delete everything except 'selenium-$(Build.BuildId).zip'
+                  unzip -o $(Build.BuildId)-selenium.zip
                   pwd
                   ls -la
                   sudo mkdir -p /var/log/selenium
