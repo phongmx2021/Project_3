@@ -9,10 +9,9 @@ stages:
       - job: Build
         pool: Azure Pipelines
         steps:
-          # Needed for Terraform VM deployment
           - task: InstallSSHKey@0
             inputs:
-              knownHostsEntry: "known_host"
+              knownHostsEntry: "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
               sshKeySecureFile: "id_rsa"
 
           - task: TerraformTaskV3@3
