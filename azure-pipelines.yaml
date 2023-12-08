@@ -53,6 +53,7 @@ stages:
               includeRootFolder: false
               archiveType: "zip"
               archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip"
+
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
             displayName: "Upload Package"
             artifact: drop-fakerestapi
@@ -66,8 +67,10 @@ stages:
               archiveFile: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
               replaceExistingArchive: true
 
-          - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+            displayName: "Upload Package"
             artifact: drop-selenium
+
 
   - stage: Deploy
     jobs:
@@ -135,8 +138,8 @@ stages:
               steps:
               - bash: |
                   cd $(Pipeline.Workspace)/drop-selenium
-                  find . -type f ! -name 'selenium-tests.zip' -delete  # delete everything except 'selenium-tests.zip'
-                  unzip -o selenium-tests.zip
+                  find . -type f ! -name '$(Build.BuildId)-selenium.zip' -delete  # delete everything except '$(Build.BuildId)-selenium.zip'
+                  unzip -o $(Build.BuildId)-selenium.zip
                   pwd
                   ls -la
                   sudo mkdir -p /var/log/selenium
