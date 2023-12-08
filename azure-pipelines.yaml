@@ -67,7 +67,7 @@ stages:
               replaceExistingArchive: true
 
           - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
-            artifact: selenium
+            artifact: drop-selenium
 
   - stage: Deploy
     jobs:
@@ -94,27 +94,33 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: Bash@3
-                  inputs:
-                    targetType: "inline"
-                    script: |
-                      #! /bin/bash
-
-                      sudo apt-get upgrade -y
-                      sudo apt-get install python3-pip -y
-                      sudo apt-get install unzip -y
-                      sudo apt-get install -y chromium-browser
-
-                      wget https://chromedriver.storage.googleapis.com/104.0.5112.29/chromedriver_linux64.zip
-                      # install chrome driver
-                      unzip chromedriver_linux64.zip
-                      sudo mv chromedriver /usr/bin/chromedriver
-                      sudo chown root:root /usr/bin/chromedriver
-                      sudo chmod +x /usr/bin/chromedriver
-                      chromium-browser -version
-                      chromedriver --version
-                      pip3 install selenium
-                      export PATH=$PATH:/usr/bin/chromedriver
+              - bash: |
+                  pwd
+                  hostname
+                  uname -a
+                  cat /etc/*-release
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
+                  sudo apt-get update -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  sudo apt-get install -y chromium-chromedriver
+                  python3 -m pip install --upgrade pip
+                  pip3 install selenium
+                  python3 -V
+                  pip3 -V
+                  /usr/bin/chromium-browser --version
+                  /usr/bin/chromedriver --version
+                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  # Install Log Analytics agent on Linux computers (only need to run once)
+                  # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
+                  # sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
+                  # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
+                env:  # To use secret variables in a script, we must explicitly map them as environment variables.
+                  AZURE_LOG_ANALYTICS_ID: $(AZURE_LOG_ANALYTICS_ID)
+                  AZURE_LOG_ANALYTICS_PRIMARY_KEY: $(AZURE_LOG_ANALYTICS_PRIMARY_KEY)
+                displayName: Configure selenium
 
   - stage: UI_Tests
     jobs:
@@ -123,23 +129,31 @@ stages:
         environment:
           name: "TEST"
           resourceType: VirtualMachine
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - download: current
-                  displayName: "Download Selenium"
-                  artifact: selenium
-                - task: Bash@3
-                  displayName: UI Tests
-                  inputs:
-                    targetType: "inline"
-                    script: |
-                      unzip -o $(Pipeline.Workspace)/selenium/selenium-tests.zip -d .
-                      sudo mkdir /var/logs
-                      python3 uitests.py > ui-logs.log
-                      cat ui-logs.log
-                      sudo mv ui-logs.log /var/logs
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - bash: |
+                cd $(Pipeline.Workspace)/drop-selenium
+                find . -type f ! -name 'selenium-tests.zip' -delete  # delete everything except 'selenium-tests.zip'
+                unzip -o selenium-tests.zip
+                pwd
+                ls -la
+                sudo mkdir -p /var/log/selenium
+                sudo chmod 664 /var/log/selenium
+                sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
+                # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
+                cd $(System.DefaultWorkingDirectory)
+                mkdir -p log/selenium
+                pwd
+                sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
+                ls -la
+              displayName: Run selenium tests
+            - task: PublishPipelineArtifact@1
+              displayName: Publish selenium logs
+              inputs:
+                targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+                artifactName: 'drop-selenium-logs'
 
   - stage: Integration_Tests
     jobs:
