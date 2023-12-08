@@ -129,31 +129,31 @@ stages:
         environment:
           name: "TEST"
           resourceType: VirtualMachine
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - bash: |
-                cd $(Pipeline.Workspace)/drop-selenium
-                find . -type f ! -name 'selenium-tests.zip' -delete  # delete everything except 'selenium-tests.zip'
-                unzip -o selenium-tests.zip
-                pwd
-                ls -la
-                sudo mkdir -p /var/log/selenium
-                sudo chmod 664 /var/log/selenium
-                sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
-                # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
-                cd $(System.DefaultWorkingDirectory)
-                mkdir -p log/selenium
-                pwd
-                sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
-                ls -la
-              displayName: Run selenium tests
-            - task: PublishPipelineArtifact@1
-              displayName: Publish selenium logs
-              inputs:
-                targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
-                artifactName: 'drop-selenium-logs'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - bash: |
+                  cd $(Pipeline.Workspace)/drop-selenium
+                  find . -type f ! -name 'selenium-tests.zip' -delete  # delete everything except 'selenium-tests.zip'
+                  unzip -o selenium-tests.zip
+                  pwd
+                  ls -la
+                  sudo mkdir -p /var/log/selenium
+                  sudo chmod 664 /var/log/selenium
+                  sudo python3 -u selenium-test.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
+                  # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
+                  cd $(System.DefaultWorkingDirectory)
+                  mkdir -p log/selenium
+                  pwd
+                  sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
+                  ls -la
+                displayName: Run selenium tests
+              - task: PublishPipelineArtifact@1
+                displayName: Publish selenium logs
+                inputs:
+                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+                  artifactName: 'drop-selenium-logs'
 
   - stage: Integration_Tests
     jobs:
