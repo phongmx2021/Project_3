@@ -118,11 +118,8 @@ stages:
                   python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                   # Install Log Analytics agent on Linux computers (only need to run once)
                   # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh
-                  # sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_ID} -s ${AZURE_LOG_ANALYTICS_PRIMARY_KEY}
-                  # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_ID}
-                env:  # To use secret variables in a script, we must explicitly map them as environment variables.
-                  AZURE_LOG_ANALYTICS_ID: $(AZURE_LOG_ANALYTICS_ID)
-                  AZURE_LOG_ANALYTICS_PRIMARY_KEY: $(AZURE_LOG_ANALYTICS_PRIMARY_KEY)
+                  # sh onboard_agent.sh -w 12080dda-b2a5-4be3-9816-491480e0e9ff -s 0EZuVkYZp0hTm3tXTsQzOEX0r9PuyABj7/Jf6H0UMiLXAT8GUIzS7X0Xfxejl91bf1X1l3baxg3V+EBQ/N2U9g==
+                  # sudo /opt/microsoft/omsagent/bin/service_control restart 12080dda-b2a5-4be3-9816-491480e0e9ff
                 displayName: Configure selenium
 
   - stage: UI_Tests
