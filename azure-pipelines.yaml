@@ -57,14 +57,14 @@ stages:
             displayName: "Upload Package"
             artifact: drop-fakerestapi
           - task: ArchiveFiles@2
-            displayName: "Selenium"
+            displayName: "selenium"
             inputs:
               rootFolderOrFile: "automatedtesting/selenium"
               includeRootFolder: false
               archiveType: "zip"
-              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
+              archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip"
               replaceExistingArchive: true
-          - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-Selenium.zip"
+          - publish: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip"
             artifact: drop-selenium
 
   - stage: Deploy
