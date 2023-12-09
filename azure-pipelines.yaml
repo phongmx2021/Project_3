@@ -96,27 +96,26 @@ stages:
           runOnce:
             deploy:
               steps:
-              - task: Bash@3
-                inputs:
-                  targetType: 'inline'
-                  script: |
-                    #! /bin/bash
-                    
-                    sudo apt-get upgrade -y
-                    sudo apt-get install python3-pip -y
-                    sudo apt-get install unzip -y
-                    sudo apt-get install -y chromium-browser
-    
-                    wget https://chromedriver.storage.googleapis.com/104.0.5112.29/chromedriver_linux64.zip
-                    # install chrome driver
-                    unzip chromedriver_linux64.zip
-                    sudo mv chromedriver /usr/bin/chromedriver
-                    sudo chown root:root /usr/bin/chromedriver
-                    sudo chmod +x /usr/bin/chromedriver
-                    chromium-browser -version
-                    chromedriver --version
-                    pip3 install selenium
-                    export PATH=$PATH:/usr/bin/chromedriver
+              - bash: |
+                  pwd
+                  hostname
+                  uname -a
+                  cat /etc/*-release
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
+                  sudo apt-get update -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  sudo apt-get install -y chromium-chromedriver
+                  python3 -m pip install --upgrade pip
+                  pip3 install selenium
+                  python3 -V
+                  pip3 -V
+                  /usr/bin/chromium-browser --version
+                  /usr/bin/chromedriver --version
+                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                displayName: Configure selenium
 
   - stage: UI_Tests
     jobs:
