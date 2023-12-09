@@ -26,7 +26,7 @@ def login(user, password):
     print(timestamp() + 'Click login oke')
     time.sleep(30) 
     print(timestamp() + 'Doi 30s xong')
-    product_label = driver.find_element_by_css_selector("div[class='title']").text
+    product_label = driver.find_element_by_css_selector("div[span='title']").text
     print(timestamp() + 'Get product label oke')
     assert "Products" in product_label
     print(timestamp() + 'Login with username {:s} and password {:s} successfully.'.format(user, password))
