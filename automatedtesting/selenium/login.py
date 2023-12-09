@@ -34,7 +34,7 @@ def login(user, password):
 
 def add_cart(driver, n_items):
     # Định danh cho tất cả các sản phẩm
-    products = driver.find_elements(By.CSS_SELECTOR, "div.inventory_item")
+    products = driver.find_element_by_css_selector("div.inventory_item")
 
     # Tổng số sản phẩm cho trước
     total_products = n_items  # Thay đổi giá trị này nếu muốn thêm số lượng sản phẩm khác
