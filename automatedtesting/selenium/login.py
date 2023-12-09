@@ -40,7 +40,7 @@ def add_cart(driver, n_items):
     total_products = n_items  # Thay đổi giá trị này nếu muốn thêm số lượng sản phẩm khác
 
     # Thực hiện các thao tác thêm sản phẩm vào giỏ hàng và in tên sản phẩm
-    for i in range(min(total_products, len(products))):
+    for i in range(total_products):
         # Trích xuất tên sản phẩm
         product_name = products[i].find_element_by_css_selector("div.inventory_item_name").text
         # Trích xuất nút "Add to cart" của sản phẩm
