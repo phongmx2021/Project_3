@@ -42,10 +42,10 @@ def add_cart(driver, n_items):
     # Thực hiện các thao tác thêm sản phẩm vào giỏ hàng và in tên sản phẩm
     for i in range(min(total_products, len(products))):
         # Trích xuất tên sản phẩm
-        product_name = products[i].find_element(By.CSS_SELECTOR, "div.inventory_item_name").text
+        product_name = products[i].find_element_by_css_selector("div.inventory_item_name").text
         
         # Trích xuất nút "Add to cart" của sản phẩm
-        add_to_cart_button = products[i].find_element(By.CSS_SELECTOR, "button[data-test^='add-to-cart']")
+        add_to_cart_button = products[i].find_element_by_css_selector("button[data-test^='add-to-cart']")
         
         # Scroll đến nút để đảm bảo nó hiển thị trong tầm nhìn của trình duyệt
         driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
