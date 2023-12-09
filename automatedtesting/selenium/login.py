@@ -2,7 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import datetime
-
+import time
 
 def timestamp():
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -24,6 +24,8 @@ def login(user, password):
     print(timestamp() + 'Get element password oke.')
     driver.find_element_by_id("login-button").click()
     print(timestamp() + 'Click login oke')
+    time.sleep(30) 
+    print(timestamp() + 'Doi 30s xong')
     product_label = driver.find_element_by_css_selector("div[class='product_label']").text
     print(timestamp() + 'Get product label oke')
     assert "Products" in product_label
