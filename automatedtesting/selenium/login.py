@@ -33,18 +33,45 @@ def login(user, password):
     return driver
 
 def add_cart(driver, n_items):
-    for i in range(n_items):
-        element = "a[id='item_" + str(i) + "_title_link']"  # Get the URL of the product
-        print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
-        driver.find_element_by_css_selector(element).click()  # Click the URL
-        print(timestamp() + 'Add element'+ element)
-        driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
-        print(timestamp() + 'click button add'+ element)
-        print(timestamp() + 'add product number i')
-        product = driver.find_element_by_css_selector("div[class='inventory_item_name ']").text  # Get the name of the product from the page
-        print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
-        driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
-    print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
+    # Định danh cho tất cả các sản phẩm
+    products = driver.find_elements(By.CSS_SELECTOR, "div.inventory_item")
+
+    # Tổng số sản phẩm cho trước
+    total_products = n_items  # Thay đổi giá trị này nếu muốn thêm số lượng sản phẩm khác
+
+    # Thực hiện các thao tác thêm sản phẩm vào giỏ hàng và in tên sản phẩm
+    for i in range(min(total_products, len(products))):
+        # Trích xuất tên sản phẩm
+        product_name = products[i].find_element(By.CSS_SELECTOR, "div.inventory_item_name").text
+        
+        # Trích xuất nút "Add to cart" của sản phẩm
+        add_to_cart_button = products[i].find_element(By.CSS_SELECTOR, "button[data-test^='add-to-cart']")
+        
+        # Scroll đến nút để đảm bảo nó hiển thị trong tầm nhìn của trình duyệt
+        driver.execute_script("arguments[0].scrollIntoView();", add_to_cart_button)
+        
+        # Đợi đến khi nút có thể được click
+        
+        # Thực hiện thao tác click với số lượng cho trước
+
+        add_to_cart_button.click()
+        
+        # In tên sản phẩm và số lượng đã thêm vào giỏ hàng
+        print(f"Đã thêm 1 sản phẩm {product_name} vào giỏ hàng")
+
+
+    # for i in range(n_items):
+    #     element = "a[id='item_" + str(i) + "_title_link']"  # Get the URL of the product
+    #     print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
+    #     driver.find_element_by_css_selector(element).click()  # Click the URL
+    #     print(timestamp() + 'Add element'+ element)
+    #     driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
+    #     print(timestamp() + 'click button add'+ element)
+    #     print(timestamp() + 'add product number '+ i)
+    #     product = driver.find_element_by_css_selector("div[class='inventory_item_name ']").text  # Get the name of the product from the page
+    #     print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
+    #     driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
+    # print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
 
 def remove_cart(driver, n_items):
     for i in range(n_items):
