@@ -42,10 +42,11 @@ def add_cart(driver, n_items):
         driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
         print(timestamp() + 'click button add'+ element)
         print(timestamp() + 'add product number '+ str(i))
-        xpath_expression = "//a[@id='item_"+str(i)+"_title_link']//div[@class='inventory_item_name ']"
-        print(timestamp() + 'xpath:'+ xpath_expression)
-        inventory_item_name = driver.find_element(By.XPATH, xpath_expression)
-        print(timestamp() + inventory_item_name + " added to shopping cart.")  # Display message saying which product was added
+        # xpath_expression = "//a[@id='item_"+str(i)+"_title_link']//div[@class='inventory_item_name ']"
+        # print(timestamp() + 'xpath:'+ xpath_expression)
+        # inventory_item_name = driver.find_element(By.XPATH, xpath_expression)
+        product = driver.find_element_by_css_selector("div[class='inventory_details_name ']").text 
+        print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
 
