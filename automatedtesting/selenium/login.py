@@ -40,7 +40,7 @@ def add_cart(driver, n_items):
         print(timestamp() + 'Add element'+ element)
         driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
         print(timestamp() + 'click button add'+ element)
-        print(timestamp() + 'add product number '+ i)
+        print(timestamp() + 'add product number '+ str(i))
         xpath_expression = "//a[@id='item_"+str(i)+"_title_link']//div[@class='inventory_item_name']"
         inventory_item_name = driver.find_element_by_xpath(xpath_expression)
         # product = driver.find_element_by_css_selector("div.inventory_item_name").text  # Get the name of the product from the page
