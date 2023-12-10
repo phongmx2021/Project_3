@@ -18,20 +18,14 @@ def login(user, password):
     driver.get('https://www.saucedemo.com/')
     # login
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
-    print(timestamp() + 'Get element user name oke.')
     driver.find_element_by_css_selector("input[id='password']").send_keys(password)
-    print(timestamp() + 'Get element password oke.')
     driver.find_element_by_id("login-button").click()
-    print(timestamp() + 'Click login oke')
     product_label = driver.find_element_by_css_selector("span[class='title']").text
-    print(timestamp() + 'Get product label oke')
     assert "Products" in product_label
     print(timestamp() + 'Login with username {:s} and password {:s} successfully.'.format(user, password))
     return driver
 
 def add_cart(driver, n_items):
-    products = driver.find_elements_by_css_selector("div.inventory_item_name ")
-
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"  # Get the URL of the product
         print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
@@ -39,14 +33,12 @@ def add_cart(driver, n_items):
         driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
         print(timestamp() + 'click button add '+ element)
         print(timestamp() + 'add product number '+ str(i))
-        product = str(products[i].text)
+        product = driver.find_element_by_css_selector("div.inventory_details_name.large_size").text
         print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
 
 def remove_cart(driver, n_items):
-    products = driver.find_elements_by_css_selector("div.inventory_item_name ")
-
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"
         driver.find_element_by_css_selector(element).click()
