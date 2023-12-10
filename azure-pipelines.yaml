@@ -9,45 +9,45 @@ stages:
       - job: Build
         pool: Azure Pipelines
         steps:
-          - task: InstallSSHKey@0
-            inputs:
-              knownHostsEntry: "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
-              sshKeySecureFile: "id_rsa"
+      #     - task: InstallSSHKey@0
+      #       inputs:
+      #         knownHostsEntry: "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
+      #         sshKeySecureFile: "id_rsa"
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Init
-            inputs:
-              provider: "azurerm"
-              command: "init"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
-              backendServiceArm: "$(azureServiceConnectionId)"
-              backendAzureRmResourceGroupName: "Project3"
-              backendAzureRmStorageAccountName: "tfstatephongmx"
-              backendAzureRmContainerName: "tfstate"
-              backendAzureRmKey: "test.terraform.tfstate"
+      #     - task: TerraformTaskV3@3
+      #       displayName: Terraform Init
+      #       inputs:
+      #         provider: "azurerm"
+      #         command: "init"
+      #         workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
+      #         backendServiceArm: "$(azureServiceConnectionId)"
+      #         backendAzureRmResourceGroupName: "Project3"
+      #         backendAzureRmStorageAccountName: "tfstatephongmx"
+      #         backendAzureRmContainerName: "tfstate"
+      #         backendAzureRmKey: "test.terraform.tfstate"
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Validate
-            inputs:
-              provider: "azurerm"
-              command: "validate"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
+      #     - task: TerraformTaskV3@3
+      #       displayName: Terraform Validate
+      #       inputs:
+      #         provider: "azurerm"
+      #         command: "validate"
+      #         workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Plan
-            inputs:
-              provider: "azurerm"
-              command: "plan"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
-              environmentServiceNameAzureRM: "$(azureServiceConnectionId)"
+      #     - task: TerraformTaskV3@3
+      #       displayName: Terraform Plan
+      #       inputs:
+      #         provider: "azurerm"
+      #         command: "plan"
+      #         workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
+      #         environmentServiceNameAzureRM: "$(azureServiceConnectionId)"
 
-          - task: TerraformTaskV3@3
-            displayName: Terraform Apply
-            inputs:
-              provider: "azurerm"
-              command: "apply"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
-              environmentServiceNameAzureRM: "$(azureServiceConnectionId)"
+      #     - task: TerraformTaskV3@3
+      #       displayName: Terraform Apply
+      #       inputs:
+      #         provider: "azurerm"
+      #         command: "apply"
+      #         workingDirectory: "$(System.DefaultWorkingDirectory)/terraform/environments/test"
+      #         environmentServiceNameAzureRM: "$(azureServiceConnectionId)"
 
   #         - task: ArchiveFiles@2
   #           displayName: "Archive FakeRestAPI"
@@ -92,40 +92,40 @@ stages:
   #                   package: "$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip"
   #                   deploymentMethod: "zipDeploy"
 
-      - deployment: VMDeploy
-        environment:
-          name: "TEST"
-          resourceType: VirtualMachine
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-              - bash: |
-                  #! /bin/bash
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
-                  sudo apt-get update -y
-                  sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip -y
-                  sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
-                  sudo apt install chromium-browser
-                  pip3 install selenium
+      # - deployment: VMDeploy
+      #   environment:
+      #     name: "TEST"
+      #     resourceType: VirtualMachine
+      #   strategy:
+      #     runOnce:
+      #       deploy:
+      #         steps:
+      #         - bash: |
+      #             ! /bin/bash
+      #             sudo apt-get install software-properties-common -y
+      #             sudo apt-add-repository universe -y
+      #             sudo apt-get update -y
+      #             sudo apt-get upgrade -y
+      #             sudo apt-get install python3-pip -y
+      #             sudo apt-get install unzip -y
+      #             sudo apt-get install -y chromium-browser
+      #             sudo apt install chromium-browser
+      #             pip3 install selenium
                   
-                  # download chrome driver v112
-                  FILE=chromedriver_linux64.zip
-                  if [ -f "$FILE" ]; then
-                  echo "$FILE exists."
-                  else
-                    wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
-                  fi
-                  # install chrome driver
-                  unzip chromedriver_linux64.zip
-                  sudo mv chromedriver /usr/bin/chromedriver
-                  sudo chown root:root /usr/bin/chromedriver
-                  sudo chmod +x /usr/bin/chromedriver
-                  chromium-browser -version
-                  chromedriver --version
+      #             download chrome driver v112
+      #             FILE=chromedriver_linux64.zip
+      #             if [ -f "$FILE" ]; then
+      #             echo "$FILE exists."
+      #             else
+      #               wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
+      #             fi
+      #             install chrome driver
+      #             unzip chromedriver_linux64.zip
+      #             sudo mv chromedriver /usr/bin/chromedriver
+      #             sudo chown root:root /usr/bin/chromedriver
+      #             sudo chmod +x /usr/bin/chromedriver
+      #             chromium-browser -version
+      #             chromedriver --version
 
   - stage: UI_Tests
     jobs:
