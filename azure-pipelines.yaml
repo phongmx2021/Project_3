@@ -4,11 +4,11 @@ variables:
   azureServiceConnectionId: "phong sub project3"
   projectRoot: $(System.DefaultWorkingDirectory)
 stages:
-  # - stage: Build
-  #   jobs:
-  #     - job: Build
-  #       pool: Azure Pipelines
-  #       steps:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool: Azure Pipelines
+        steps:
   #         - task: InstallSSHKey@0
   #           inputs:
   #             knownHostsEntry: "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
@@ -57,18 +57,18 @@ stages:
   #           displayName: "Upload Package"
   #           artifact: drop-fakerestapi
 
-  #         - task: ArchiveFiles@2
-  #           displayName: "Archive Selenium"
-  #           inputs:
-  #             rootFolderOrFile: "automatedtesting/selenium"
-  #             includeRootFolder: false
-  #             archiveType: zip
-  #             archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
-  #             replaceExistingArchive: true
+          - task: ArchiveFiles@2
+            displayName: "Archive Selenium"
+            inputs:
+              rootFolderOrFile: "automatedtesting/selenium"
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+              replaceExistingArchive: true
 
-  #         - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
-  #           displayName: "Upload Package"
-  #           artifact: drop-selenium
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip
+            displayName: "Upload Package"
+            artifact: drop-selenium
 
 
   # - stage: Deploy
