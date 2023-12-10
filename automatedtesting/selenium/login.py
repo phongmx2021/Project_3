@@ -1,6 +1,7 @@
 # #!/usr/bin/env python
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.by import By
 import datetime
 import time
 
@@ -42,8 +43,8 @@ def add_cart(driver, n_items):
         print(timestamp() + 'click button add'+ element)
         print(timestamp() + 'add product number '+ str(i))
         xpath_expression = "//a[@id='item_"+str(i)+"_title_link']//div[@class='inventory_item_name ']"
-        inventory_item_name = driver.find_element_by_xpath(xpath_expression)
-        # product = driver.find_element_by_css_selector("div.inventory_item_name").text  # Get the name of the product from the page
+        print(timestamp() + 'xpath:'+ xpath_expression)
+        inventory_item_name = driver.find_element(By.XPATH, xpath_expression)
         print(timestamp() + inventory_item_name + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
