@@ -25,7 +25,7 @@ stages:
               backendAzureRmStorageAccountName: "tfstatephongmx"
               backendAzureRmContainerName: "tfstate"
               backendAzureRmKey: "test.terraform.tfstate"
-              
+
           - task: TerraformTaskV3@3
             displayName: Terraform Validate
             inputs:
@@ -75,8 +75,8 @@ stages:
             artifact: drop-selenium
 
 
-  # - stage: Deploy
-  #   jobs:
+  - stage: Deploy
+    jobs:
   #     - deployment: FakeRestAPI
   #       pool: Azure Pipelines
   #       environment: "TEST"
@@ -92,37 +92,40 @@ stages:
   #                   package: "$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip"
   #                   deploymentMethod: "zipDeploy"
 
-  #     - deployment: VMDeploy
-  #       environment:
-  #         name: "TEST"
-  #         resourceType: VirtualMachine
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #             - bash: |
-  #                 #! /bin/bash
-  #                 sudo apt-get install software-properties-common -y
-  #                 sudo apt-add-repository universe -y
-  #                 sudo apt-get update -y
-  #                 sudo apt-get upgrade -y
-  #                 sudo apt-get install python3-pip -y
-  #                 sudo apt-get install unzip -y
-  #                 sudo apt-get install -y chromium-browser
-  #                 sudo apt install chromium-browser
-  #                 pip3 install selenium
+      - deployment: VMDeploy
+        environment:
+          name: "TEST"
+          resourceType: VirtualMachine
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - bash: |
+                  #! /bin/bash
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
+                  sudo apt-get update -y
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  sudo apt install chromium-browser
+                  pip3 install selenium
                   
-  #                 # download chrome driver v112
-  #                 FILE=chromedriver_linux64.zip
-  #                 rm -f chromedriver_linux64.zip
-  #                 wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
-  #                 # install chrome driver
-  #                 unzip chromedriver_linux64.zip
-  #                 sudo mv chromedriver /usr/bin/chromedriver
-  #                 sudo chown root:root /usr/bin/chromedriver
-  #                 sudo chmod +x /usr/bin/chromedriver
-  #                 chromium-browser -version
-  #                 chromedriver --version
+                  # download chrome driver v112
+                  FILE=chromedriver_linux64.zip
+                  if [ -f "$FILE" ]; then
+                  echo "$FILE exists."
+                  else
+                    wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
+                  fi
+                  # install chrome driver
+                  unzip chromedriver_linux64.zip
+                  sudo mv chromedriver /usr/bin/chromedriver
+                  sudo chown root:root /usr/bin/chromedriver
+                  sudo chmod +x /usr/bin/chromedriver
+                  chromium-browser -version
+                  chromedriver --version
 
   - stage: UI_Tests
     jobs:
