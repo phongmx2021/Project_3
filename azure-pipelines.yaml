@@ -154,11 +154,11 @@ stages:
                   sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
                   ls -la
                 displayName: Run selenium tests
-              - task: PublishPipelineArtifact@1
-                displayName: Publish selenium logs
-                inputs:
-                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
-                  artifactName: 'drop-selenium-logs'
+              # - task: PublishPipelineArtifact@1
+              #   displayName: Publish selenium logs
+              #   inputs:
+              #     targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+              #     artifactName: 'drop-selenium-logs'
 
   # - stage: Integration_Tests
   #   jobs:
