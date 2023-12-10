@@ -37,19 +37,21 @@ def add_cart(driver, n_items):
         print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
         driver.find_element_by_css_selector(element).click()  # Click the URL
         driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
+        print(timestamp() + 'click button add '+ element)
         print(timestamp() + 'add product number '+ str(i))
-        product = str(products[0].text)
+        product = str(products[i].text)
         print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
 
 def remove_cart(driver, n_items):
     products = driver.find_elements_by_css_selector("div.inventory_item_name ")
+
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"
         driver.find_element_by_css_selector(element).click()
         driver.find_element_by_css_selector("button.btn_secondary.btn_inventory").click()
-        product = str(products[0].text)
+        product = str(products[i].text)
         print(timestamp() + product + " removed from shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()
     print(timestamp() + '{:d} items are all removed from shopping cart successfully.'.format(n_items))
