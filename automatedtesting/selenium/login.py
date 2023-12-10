@@ -1,9 +1,7 @@
 # #!/usr/bin/env python
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.common.by import By
 import datetime
-import time
 
 def timestamp():
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -25,8 +23,6 @@ def login(user, password):
     print(timestamp() + 'Get element password oke.')
     driver.find_element_by_id("login-button").click()
     print(timestamp() + 'Click login oke')
-    time.sleep(30) 
-    print(timestamp() + 'Doi 30s xong')
     product_label = driver.find_element_by_css_selector("span[class='title']").text
     print(timestamp() + 'Get product label oke')
     assert "Products" in product_label
@@ -45,7 +41,7 @@ def add_cart(driver, n_items):
         # xpath_expression = "//a[@id='item_"+str(i)+"_title_link']//div[@class='inventory_item_name ']"
         # print(timestamp() + 'xpath:'+ xpath_expression)
         # inventory_item_name = driver.find_element(By.XPATH, xpath_expression)
-        product = driver.find_element_by_css_selector("div[class='inventory_details_name ']").text 
+        product = driver.find_element_by_css_selector("a#item_"+str(i)+"_title_link > div.inventory_item_name ").text 
         print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
