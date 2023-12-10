@@ -30,6 +30,10 @@ def login(user, password):
     return driver
 
 def add_cart(driver, n_items):
+    products = driver.find_elements_by_css_selector("div.inventory_item_name")
+    print(timestamp() + 'Get all name'+ products)
+    print(timestamp() + 'name 1'+ products[0])
+
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"  # Get the URL of the product
         print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
