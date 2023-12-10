@@ -31,28 +31,25 @@ def login(user, password):
 
 def add_cart(driver, n_items):
     products = driver.find_elements_by_css_selector("div.inventory_item_name ")
-    print(timestamp() + 'Get all name'+ str(len(products)))
-    print(timestamp() + 'name 1'+ str(products[0].text))
 
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"  # Get the URL of the product
         print(timestamp() + 'Add item item_'+ str(i) + '_title_link')
         driver.find_element_by_css_selector(element).click()  # Click the URL
-        print(timestamp() + 'Add element'+ element)
         driver.find_element_by_css_selector("button.btn_primary.btn_inventory").click()  # Add the product to the cart
-        print(timestamp() + 'click button add'+ element)
         print(timestamp() + 'add product number '+ str(i))
-        product = driver.find_element_by_css_selector("div.inventory_item_name ").text 
+        product = str(products[0].text)
         print(timestamp() + product + " added to shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()  # Click the Back button
     print(timestamp() + '{:d} items are all added to shopping cart successfully.'.format(n_items))
 
 def remove_cart(driver, n_items):
+    products = driver.find_elements_by_css_selector("div.inventory_item_name ")
     for i in range(n_items):
         element = "a[id='item_" + str(i) + "_title_link']"
         driver.find_element_by_css_selector(element).click()
         driver.find_element_by_css_selector("button.btn_secondary.btn_inventory").click()
-        product = driver.find_element_by_css_selector("div[class='inventory_item_name ']").text
+        product = str(products[0].text)
         print(timestamp() + product + " removed from shopping cart.")  # Display message saying which product was added
         driver.find_element_by_css_selector("button.inventory_details_back_button").click()
     print(timestamp() + '{:d} items are all removed from shopping cart successfully.'.format(n_items))
