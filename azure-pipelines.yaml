@@ -75,8 +75,8 @@ stages:
             artifact: drop-selenium
 
 
-  - stage: Deploy
-    jobs:
+  # - stage: Deploy
+  #   jobs:
   #     - deployment: FakeRestAPI
   #       pool: Azure Pipelines
   #       environment: "TEST"
