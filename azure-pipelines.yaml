@@ -98,11 +98,14 @@ stages:
               steps:
               - bash: |
                   #! /bin/bash
-                      
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
+                  sudo apt-get update -y
                   sudo apt-get upgrade -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
                   sudo apt-get install -y chromium-browser
+                  sudo apt install chromium-browser
                   pip3 install selenium
                   
                   # download chrome driver v89
