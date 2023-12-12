@@ -14,7 +14,7 @@ terraform {
     storage_account_name = "tfstatephongmx"
     container_name       = "tfstate"
     key                  = "test.terraform.tfstate"
-    access_key           = "2iACF8vJxIKlw5Z1ejHo9G1RWc1nZurJtd43Mu22/bFUi8FF27+labZf6pDfTW9XShzayvNhwtvI+ASt43x7TQ=="
+    access_key           = "mu8TOkiOAIeRwiDDeJgMFKtjzUs1N7RFGufdvaSvd/XXP1bsD58jabiBxjm5hf5KOf6E6+9yW4eF+AStloVczw=="
   }
 }
 # module "resource_group" {
