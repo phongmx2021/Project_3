@@ -102,30 +102,21 @@ stages:
               steps:
               - bash: |
                   ! /bin/bash
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
-                  sudo apt-get update -y
                   sudo apt-get upgrade -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
                   sudo apt install chromium-browser
-                  pip3 install selenium
-                  
-                  download chrome driver v112
-                  FILE=chromedriver_linux64.zip
-                  if [ -f "$FILE" ]; then
-                  echo "$FILE exists."
-                  else
-                    wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
-                  fi
-                  install chrome driver
+
+                  wget https://chromedriver.storage.googleapis.com/104.0.5112.29/chromedriver_linux64.zip
+                  # install chrome driver
                   unzip chromedriver_linux64.zip
                   sudo mv chromedriver /usr/bin/chromedriver
                   sudo chown root:root /usr/bin/chromedriver
                   sudo chmod +x /usr/bin/chromedriver
                   chromium-browser -version
                   chromedriver --version
+                  pip3 install selenium
+                  export PATH=$PATH:/usr/bin/chromedriver
 
   - stage: UI_Tests
     jobs:
