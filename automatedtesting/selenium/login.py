@@ -31,8 +31,11 @@ rootLogger.setLevel(logging.INFO)
 def initialize_browser():
     rootLogger.info('Starting the browser...')
     options = ChromeOptions()
-    options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument("--headless") 
     options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
+    driver.get('https://www.saucedemo.com/')
     
     driver = webdriver.Chrome(options=options)
     rootLogger.info(
