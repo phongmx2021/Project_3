@@ -126,7 +126,7 @@ stages:
                     ls
                     # install chrome driver
                     echo "unzip"
-                    unzip chromedriver-linux64.zip
+                    # unzip chromedriver-linux64.zip
                     echo "unzip1"
 
                     sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
