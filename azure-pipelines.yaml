@@ -144,57 +144,57 @@ stages:
                     echo "chrome driver"
                     chromedriver --version
                   
-                    cd $(Pipeline.Workspace)
-                    ls
-                    cd test-selenium
-                    ls
-                    unzip -o $(Build.BuildId)-selenium.zip
-                    sudo mkdir -p /var/log/selenium
-                    sudo chmod 664 /var/log/selenium
-                    python3 login.py > ui-logs.log
-                    python3 login.py
-                    sudo mv ui-logs.log /var/log/selenium
-                    cd $(System.DefaultWorkingDirectory)
-                    mkdir -p log/selenium
-                    sudo cp /var/log/selenium/ui-logs.log log/selenium
-              - task: PublishPipelineArtifact@1
-                displayName: 'Upload jmeter log package'
-                inputs:
-                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/ui-logs.log'
-                  artifact: 'test-selenium-logs'
+              #       cd $(Pipeline.Workspace)
+              #       ls
+              #       cd test-selenium
+              #       ls
+              #       unzip -o $(Build.BuildId)-selenium.zip
+              #       sudo mkdir -p /var/log/selenium
+              #       sudo chmod 664 /var/log/selenium
+              #       python3 login.py > ui-logs.log
+              #       python3 login.py
+              #       sudo mv ui-logs.log /var/log/selenium
+              #       cd $(System.DefaultWorkingDirectory)
+              #       mkdir -p log/selenium
+              #       sudo cp /var/log/selenium/ui-logs.log log/selenium
+              # - task: PublishPipelineArtifact@1
+              #   displayName: 'Upload jmeter log package'
+              #   inputs:
+              #     targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/ui-logs.log'
+              #     artifact: 'test-selenium-logs'
 
-  # - stage: UI_Tests
-  #   jobs:
-  #     - deployment: UITests
-  #       pool: Azure Pipelines
-  #       environment:
-  #         name: "TEST"
-  #         resourceType: VirtualMachine
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #             - bash: |
-  #                 cd $(Pipeline.Workspace)
-  #                 cd test-selenium
-  #                 unzip -o $(Build.BuildId)-selenium.zip
-  #                 pwd
-  #                 ls -la
-  #                 sudo mkdir -p /var/log/selenium
-  #                 sudo chmod 664 /var/log/selenium
-  #                 sudo python3 -u login.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
-  #                 # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
-  #                 cd $(System.DefaultWorkingDirectory)
-  #                 mkdir -p log/selenium
-  #                 pwd
-  #                 sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
-  #                 ls -la
-  #               displayName: Run selenium tests
-  #             - task: PublishPipelineArtifact@1
-  #               displayName: Publish selenium logs
-  #               inputs:
-  #                 targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
-  #                 artifactName: 'test-selenium-logs'
+  - stage: UI_Tests
+    jobs:
+      - deployment: UITests
+        pool: Azure Pipelines
+        environment:
+          name: "TEST"
+          resourceType: VirtualMachine
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - bash: |
+                  cd $(Pipeline.Workspace)
+                  cd test-selenium
+                  unzip -o $(Build.BuildId)-selenium.zip
+                  pwd
+                  ls -la
+                  sudo mkdir -p /var/log/selenium
+                  sudo chmod 664 /var/log/selenium
+                  sudo python3 -u login.py 2>&1 | sudo tee -a /var/log/selenium/selenium-test.log
+                  # copy selenium log file to $(System.DefaultWorkingDirectory)/log/selenium/
+                  cd $(System.DefaultWorkingDirectory)
+                  mkdir -p log/selenium
+                  pwd
+                  sudo cp /var/log/selenium/selenium-test.log log/selenium/selenium-test.log
+                  ls -la
+                displayName: Run selenium tests
+              - task: PublishPipelineArtifact@1
+                displayName: Publish selenium logs
+                inputs:
+                  targetPath: '$(System.DefaultWorkingDirectory)/log/selenium/selenium-test.log'
+                  artifactName: 'test-selenium-logs'
 
   # - stage: Integration_Tests
   #   jobs:
