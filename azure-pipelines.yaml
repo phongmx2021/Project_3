@@ -100,7 +100,6 @@ stages:
           runOnce:
             deploy:
               steps:
-              - bash: |
               - task: Bash@3
                 displayName: 'Bash Test'
                 inputs:
@@ -145,7 +144,10 @@ stages:
                     echo "chrome driver"
                     chromedriver --version
                   
-                    cd $(Pipeline.Workspace)/drop-selenium
+                    cd $(Pipeline.Workspace)
+                    ls
+                    cd drop-selenium
+                    ls
                     unzip -o $(Build.BuildId)-selenium.zip
                     sudo mkdir -p /var/log/selenium
                     sudo chmod 664 /var/log/selenium
