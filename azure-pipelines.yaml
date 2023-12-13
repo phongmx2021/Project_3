@@ -101,28 +101,26 @@ stages:
             deploy:
               steps:
               - bash: |
-                  #!/bin/bash
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
+                  sudo apt-get update -y
                   sudo apt-get upgrade -y
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
                   sudo apt-get install -y chromium-browser
+                  sudo apt install chromium-browser
                   pip3 install selenium
-
+                  
                   FILE=chromedriver_linux64.zip
                   if [ -f "$FILE" ]; then
-                    echo "$FILE exists."
+                  echo "$FILE exists."
                   else
-                    wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/119.0.6045.105/linux64/chromedriver-linux64.zip
+                    wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
                   fi
-                  echo "Place"
-                  pwd
-                  echo "list out"
-                  ls
-                  unzip chromedriver-linux64.zip
-                  sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
+                  unzip chromedriver_linux64.zip
+                  sudo mv chromedriver /usr/bin/chromedriver
                   sudo chown root:root /usr/bin/chromedriver
                   sudo chmod +x /usr/bin/chromedriver
-                  export PATH=$PATH:/usr/bin/chromedriver
                   chromium-browser -version
                   chromedriver --version
 
