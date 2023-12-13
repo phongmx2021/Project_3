@@ -53,7 +53,7 @@ def login(user, password, driver):
     driver.find_element(by=By.CSS_SELECTOR,
                         value="input[id='login-button']").click()
  
-    header = driver.find_element_by_css_selector("div[class='product_label']").text
+    header = driver.find_element_by_css_selector("span[class='title']").text
     assert "Products" == header
     rootLogger.info("Succesfully loggeed to " + url + " with user " + user)
  
