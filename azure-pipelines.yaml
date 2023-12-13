@@ -105,16 +105,15 @@ stages:
                   sudo apt-add-repository universe -y
                   sudo apt-get update -y
                   sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip -y
-                  sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
-                  sudo apt install chromium-browser
-                  pip3 install selenium
-                  
                   FILE=chromedriver_linux64.zip
                   if [ -f "$FILE" ]; then
                   echo "$FILE exists."
                   else
+                    sudo apt-get install python3-pip -y
+                    sudo apt-get install unzip -y
+                    sudo apt-get install -y chromium-browser
+                    sudo apt install chromium-browser
+                    pip3 install selenium
                     wget https://chromedriver.storage.googleapis.com/112.0.5615.49/chromedriver_linux64.zip
                     unzip chromedriver_linux64.zip
                     sudo mv chromedriver /usr/bin/chromedriver
