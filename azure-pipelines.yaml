@@ -125,11 +125,22 @@ stages:
                     echo "list out"
                     ls
                     # install chrome driver
+                    echo "unzip"
                     unzip chromedriver-linux64.zip
+                    echo "unzip1"
+
                     sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
+                    echo "unzip2"
+
                     sudo chown root:root /usr/bin/chromedriver
+                    echo "unzip3"
+
                     sudo chmod +x /usr/bin/chromedriver
+                    echo "unzip4"
+
                     export PATH=$PATH:/usr/bin/chromedriver
+                    echo "unzip5"
+
                     chromium-browser -version
                     echo "chrome driver"
                     chromedriver --version
