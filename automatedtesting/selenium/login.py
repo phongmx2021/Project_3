@@ -3,6 +3,7 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
+
  
 shopping_cart = {
     "backpack": "sauce-labs-backpack",
