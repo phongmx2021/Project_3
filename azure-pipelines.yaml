@@ -130,6 +130,9 @@ stages:
                     sudo chmod +x /usr/bin/chromedriver
                     chromium-browser -version
                     chromedriver --version
+                    # agent log analytics
+                    wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w 7c8eff58-8ef6-4730-aaac-2562f511b007 -s p33y2XREkdBGxC+Dwxp7mbTeLiVzV0RMD5khz/muOVyB6Zf4VuRBeOVWqhdJTWQd3VCbXPfICaU5V6VRrBcKvg==
+                    sudo /opt/microsoft/omsagent/bin/service_control restart 7c8eff58-8ef6-4730-aaac-2562f511b007
                   
   - stage: UI_Tests
     jobs:
