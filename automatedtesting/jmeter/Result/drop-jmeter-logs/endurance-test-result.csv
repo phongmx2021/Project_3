@@ -1,0 +1,14 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1702570407370,1056,Get Books,200,OK,Endurance Test 1-1,text,true,,909227,155,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,733,0,548
+1702570407754,716,Get Books,200,OK,Endurance Test 1-2,text,true,,902257,155,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,479,0,175
+1702570408430,87,Post Books,200,OK,Endurance Test 1-1,text,true,,262,239,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,87,0,0
+1702570408471,51,Post Books,200,OK,Endurance Test 1-2,text,true,,262,239,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,51,0,0
+1702570408518,180,Get Book,200,OK,Endurance Test 1-1,text,true,,3948,161,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books/?id=1,180,0,0
+1702570408522,274,Get Book,200,OK,Endurance Test 1-2,text,true,,5808,161,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books/?id=2,274,0,0
+1702570408699,119,Delete Book,200,OK,Endurance Test 1-1,,true,,211,251,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books/?id=1,119,0,0
+1702570408797,36,Delete Book,200,OK,Endurance Test 1-2,,true,,211,251,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books/?id=2,36,0,0
+1702570408818,233,Get Books,200,OK,Endurance Test 1-1,text,true,,915321,155,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,149,0,0
+1702570409052,54,Post Books,200,OK,Endurance Test 1-1,text,true,,262,239,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,54,0,0
+1702570408834,305,Get Books,200,OK,Endurance Test 1-2,text,true,,913831,155,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,247,0,0
+1702570409106,121,Get Book,200,OK,Endurance Test 1-1,text,true,,4131,161,2,2,https://phongmx-webapp-AppService.azurewebsites.net/api/Books/?id=3,121,0,0
+1702570409140,92,Post Books,200,OK,Endurance Test 1-2,text,true,,262,239,1,1,https://phongmx-webapp-AppService.azurewebsites.net/api/Books,92,0,0
