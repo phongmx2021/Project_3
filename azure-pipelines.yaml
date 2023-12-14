@@ -227,13 +227,13 @@ stages:
 
           - bash: |
               apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/stress-test.jmx \
-                                          -l log/jmeter/stress-test-result.csv \
+                                          -l log/jmeter/test-result.csv \
                                           -e -f -o log/jmeter \
                                           -j log/jmeter/jmeter-stress-test.log
 
           - bash: |
               apache-jmeter-5.5/bin/jmeter -n -t automatedtesting/jmeter/endurance-test.jmx \
-                                          -l log/jmeter/endurance-test-result.csv \
+                                          -l log/jmeter/test-result.csv \
                                           -e -f -o log/jmeter \
                                           -j log/jmeter/jmeter-endurance-test.log
 
